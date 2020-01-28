@@ -1,4 +1,4 @@
-# aspnet-core-UserRestApi
+# aspnet-core-UsersRestApi
 A Asp.Net Core REST API application to perform CRUD operations on a Users list.
 
 ## What .Net framework is required?
