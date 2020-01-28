@@ -3,6 +3,7 @@ A Asp.Net Core REST API application to perform CRUD operations on a Users list.
 
 ## What .Net framework is required?
 * .Net Core Ver 2.2
+* Asp.Net Core Ver 2.2
 
 ## What happens when project is built?
 * The project uses EntityFramework code first to create UserRestApi database in the localDb and seed 5 users to the Users table.
@@ -27,4 +28,4 @@ A Asp.Net Core REST API application to perform CRUD operations on a Users list.
 ## Extras
 * Implements latency simulation for requests in development environment.
 
-* There is a powershell script along with the solution file that can add a user, search user by name and also delete a user.
+* There is a [powershell script](./AccessUsersRestAPI.ps1) along with the solution file that can add a user, search user by name and also delete a user.

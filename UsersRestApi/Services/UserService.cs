@@ -7,7 +7,7 @@ using UsersRestApi.Models;
 namespace UsersRestApi.Services
 {
   /// <summary>
-  /// Service class to abstract the CRUD operations of the User class
+  /// Service class to abstract the database CRUD operations of the User class
   /// </summary>
   public class UserService : IUserService
   {

@@ -8,6 +8,9 @@ using UsersRestApi.Services;
 
 namespace UsersRestApi.Controllers
 {
+  /// <summary>
+  /// REST API to perform CRUD operation on User entity
+  /// </summary>
   [Route("api/[controller]")]
   [ApiController]
   public class UsersController : ControllerBase
@@ -19,6 +22,10 @@ namespace UsersRestApi.Controllers
       _service = service;
     }
 
+    /// <summary>
+    /// Gets all the users
+    /// </summary>
+    /// <returns>A List of User entities</returns>
     [Description("Gets all the users in the system")]
     // GET api/users
     [HttpGet]
@@ -27,6 +34,11 @@ namespace UsersRestApi.Controllers
       return Ok(_service.GetAllUsers());
     }
 
+    /// <summary>
+    /// Get a user whose Id matches the value passed in as parameter
+    /// </summary>
+    /// <param name="id">User Id of the user</param>
+    /// <returns>If user is found, returns the user entity, else returns not found response</returns>
     [Description("Gets a user by the user Id")]
     // GET api/users/5
     [HttpGet("{id}")]
@@ -39,6 +51,12 @@ namespace UsersRestApi.Controllers
       return Ok(_service.GetUserById(id));
     }
 
+    /// <summary>
+    /// Finds Users whose Firstname or Lastname contains the name passed in as parameter.
+    /// It returns the user even if there is a partial match of name.
+    /// </summary>
+    /// <param name="name">Name to search for</param>
+    /// <returns>List of users who has the name in Firstname or Lastname</returns>
     // GET api/users/GetByName?name=jo
     [Description("Gets all users whose name contains the search term")]
     [HttpGet("[action]")]
@@ -46,7 +64,7 @@ namespace UsersRestApi.Controllers
     {
       if (string.IsNullOrWhiteSpace(name))
       {
-        throw new ArgumentNullException(nameof(name));
+        return BadRequest(new ArgumentNullException(nameof(name)));
       }
 
       var foundUsers = _service.GetUsersByName(name);
@@ -57,6 +75,11 @@ namespace UsersRestApi.Controllers
         return NotFound();
     }
 
+    /// <summary>
+    /// Adds a new User
+    /// </summary>
+    /// <param name="value">User entity to be added</param>
+    /// <returns>Returns the created user entity</returns>
     [Description("Adds a new user")]
     // POST api/users
     [HttpPost]
@@ -68,16 +91,22 @@ namespace UsersRestApi.Controllers
       }
 
       if (value == null)
-        throw new ArgumentNullException(nameof(value));
+        return BadRequest(new ArgumentNullException(nameof(value)));
 
       bool userExists = _service.CheckIfUserExists(value.Id);
       if (userExists)
-        throw new ArgumentException($"User with Id: ${value.Id} already exists!");
+        return BadRequest(new ArgumentException($"User with Id: ${value.Id} already exists!"));
 
       var newUser = _service.AddUser(value);
       return CreatedAtAction("Get", new { id = newUser.Id }, newUser);
     }
 
+    /// <summary>
+    /// Updates a user entity.
+    /// </summary>
+    /// <param name="id">Id of the user to update</param>
+    /// <param name="value">User entity with updated values</param>
+    /// <returns>Returns the updated user entity</returns>
     [Description("Updates a user")]
     // PUT api/users/5
     [HttpPut("{id}")]
@@ -99,6 +128,11 @@ namespace UsersRestApi.Controllers
       return Ok(modifiedUser);
     }
 
+    /// <summary>
+    /// Deletes a user
+    /// </summary>
+    /// <param name="id">User Id of the user to delete</param>
+    /// <returns>Ok result of user was deleted</returns>
     [Description("Deletes a user")]
     // DELETE api/users/5
     [HttpDelete("{id}")]

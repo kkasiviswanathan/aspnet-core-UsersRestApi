@@ -6,6 +6,10 @@ using UsersRestApi.Services;
 
 namespace UsersRestApiTests.Services
 {
+  /// <summary>
+  /// A fake user service which will be passed to the UsersController to perform unit testing.
+  /// This helps us avoid requiring a db connection for unit testing.
+  /// </summary>
   public class UsersServiceFake: IUserService
   {
     private readonly List<User> _userList;

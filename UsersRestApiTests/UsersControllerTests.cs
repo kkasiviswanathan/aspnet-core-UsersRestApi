@@ -146,6 +146,34 @@ namespace UsersRestApiTests
       Assert.IsType<BadRequestObjectResult>(badResponse);
     }
 
+    [Fact]
+    public void Add_NullObjectPassed_ReturnsBadRequest()
+    {
+      User nullUser = null;
+      var badResponse = _controller.Post(nullUser);
+      Assert.IsType<BadRequestObjectResult>(badResponse);
+    }
+
+    [Fact]
+    public void Add_UserWithExistingIdPassed_ReturnsBadResponse()
+    {
+      User testUser = new User()
+      {
+        Id = 3,
+        Firstname = "Dwayne",
+        Lastname = "Wade",
+        Address = "567 Elk Grove Dr",
+        City = "Salt Lake City",
+        State = "UT",
+        Zipcode = "84011",
+        Age = 24,
+        Interests = "Soccer, Biking"
+      };
+
+      var badResponse = _controller.Post(testUser);
+
+      Assert.IsType<BadRequestObjectResult>(badResponse);
+    }
 
     [Fact]
     public void Add_ValidObjectPassed_ReturnsCreatedResponse()
